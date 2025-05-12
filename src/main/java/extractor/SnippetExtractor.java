@@ -1,68 +1,34 @@
 package extractor;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.Callable;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.github.javaparser.ParserConfiguration;
-import com.github.javaparser.StaticJavaParser;
-import configuration.ExtractorConfiguration;
-import model.CodeSnippet;
+import picocli.CommandLine;
 
-public class SnippetExtractor {
+@CommandLine.Command(name = "tabaqui-extractor", mixinStandardHelpOptions = true, version = "1.0",
+        description = "Extracts annotated code snippets into JSON or YAML.")
+public class SnippetExtractor implements Callable<Integer> {
 
-    private String path;
+    @CommandLine.Option(names = {"-p", "--project"}, description = "Project path to scan", required = true)
+    private Path projectPath;
 
-    public static void main(String[] args) throws IOException {
+    @CommandLine.Option(names = {"-f", "--format"}, description = "Output format: json or yaml", defaultValue = "json")
+    private String format;
 
-        if (args.length < 1) {
-            System.err.println("Usage: java -jar extractor.jar <relative_project_path>");
-            System.exit(1);
-        }
-
-        Path userHome = Paths.get(System.getProperty("user.home"));
-        Path projectPath = userHome.resolve(args[0]);
-        if (!Files.exists(projectPath)) {
-            System.err.println("Invalid path: " + projectPath);
-            System.exit(2);
-        }
-
-        ParserConfiguration configuration = new ParserConfiguration();
-        configuration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
-        StaticJavaParser.setConfiguration(configuration); // takes a configuration file
-        ExtractorConfiguration config = new ExtractorConfiguration();
-
-        List<CodeSnippet> allSnippets = new ArrayList<>(); // snippet list
-        CodeExtractor extractor = new CodeExtractor();
-
-        Files.walk(projectPath) // going through all files mentioned in configuration
-                .filter(path -> config.getFileExtensions().stream().anyMatch(ext -> path.toString().endsWith(ext)))
-                .forEach(path -> {
-                    try {
-                        allSnippets.addAll(extractor.extract(path)); //add all appropriate snippets
-                    } catch (IOException e) {
-                        // log error may be implemented
-                    }
-                });
-
-        String outputFileExt = ".json"; // read from config if available
-
-        // choose the appropriate file format in config
-        ObjectMapper mapper = outputFileExt.equals(".yaml") ? new ObjectMapper(new YAMLFactory()) : new ObjectMapper();
-        mapper.writerWithDefaultPrettyPrinter().writeValue(new File("snippets" + outputFileExt), allSnippets);
+    public static void main(String[] args) {
+        int exitCode = new CommandLine(new SnippetExtractor()).execute(args);
+        System.exit(exitCode);
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getPath() {
-        return path;
+    @Override
+    public Integer call() {
+        try {
+            SnippetService.extractSnippets(projectPath.toAbsolutePath(), format.toLowerCase());
+            System.out.println("✅ Snippets extracted to " + format.toUpperCase());
+        } catch (Exception e) {
+            System.err.println("❌ Error: " + e.getMessage());
+            return 1;
+        }
+        return 0;
     }
 }

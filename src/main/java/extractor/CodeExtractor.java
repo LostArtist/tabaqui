@@ -5,8 +5,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.BodyDeclaration;
@@ -18,6 +18,12 @@ import com.github.javaparser.ast.expr.NormalAnnotationExpr;
 import model.CodeSnippet;
 
 public class CodeExtractor {
+
+    static {
+        ParserConfiguration config = new ParserConfiguration();
+        config.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
+        StaticJavaParser.setConfiguration(config);
+    }
 
     public List<CodeSnippet> extract(Path filePath) throws IOException {
 
@@ -43,7 +49,6 @@ public class CodeExtractor {
             String question = getMemberValue(annotation, "question");
             String answer = getMemberValue(annotation, "answer");
 
-            // Clean code: strip annotation line from output
             String code = member.toString()
                     .replace(annotation.toString() + "\n", "")
                     .replace(annotation.toString(), "");

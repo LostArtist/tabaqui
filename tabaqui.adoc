@@ -27,4 +27,19 @@ and serializes them into a machine-readable format like:
 
 == User guide
 
-To use this project, you need to inject the maven dependency for custom annotating into the project you want to extract code snippets from. This https://github.com/LostArtist/ai-annotations-api[Annotation API] will allow you to annotate the code
+To use this project, you need to inject the maven dependency for custom annotating into the project you want to extract code snippets from. This https://github.com/LostArtist/ai-annotations-api[Annotation API] will allow you to annotate the code.
+
+After you annotate all the necessary code in the project, you want to extract snippets from run the .jar file in the directory of this project:
+
+=== Example:
+[source, ]
+----
+java -jar target/tabaqui-jar-with-dependencies.jar --project ~/code/java/camel/components/camel-kafka --format json
+----
+
+=== Parameters:
+
+**-p, --project** - path to the project +
+**-f, --format** - output file format (json, yaml)
+
+The output file will be placed in the annotated project directory.
