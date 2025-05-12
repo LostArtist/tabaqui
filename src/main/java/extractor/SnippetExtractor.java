@@ -20,11 +20,24 @@ public class SnippetExtractor {
     private String path;
 
     public static void main(String[] args) throws IOException {
+
+        if (args.length < 1) {
+            System.err.println("Usage: java -jar extractor.jar <relative_project_path>");
+            System.exit(1);
+        }
+
+        Path userHome = Paths.get(System.getProperty("user.home"));
+        Path projectPath = userHome.resolve(args[0]);
+        if (!Files.exists(projectPath)) {
+            System.err.println("Invalid path: " + projectPath);
+            System.exit(2);
+        }
+
         ParserConfiguration configuration = new ParserConfiguration();
         configuration.setLanguageLevel(ParserConfiguration.LanguageLevel.JAVA_17);
-        StaticJavaParser.setConfiguration(configuration); // takes config dile
+        StaticJavaParser.setConfiguration(configuration); // takes a configuration file
         ExtractorConfiguration config = new ExtractorConfiguration();
-        Path projectPath = Paths.get(System.getProperty("user.home"), config.getProjectRelativePath()); //path to the project
+
         List<CodeSnippet> allSnippets = new ArrayList<>(); // snippet list
         CodeExtractor extractor = new CodeExtractor();
 
@@ -39,7 +52,8 @@ public class SnippetExtractor {
                 });
 
         String outputFileExt = ".json"; // read from config if available
-        //choose the appropriate file format in config
+
+        // choose the appropriate file format in config
         ObjectMapper mapper = outputFileExt.equals(".yaml") ? new ObjectMapper(new YAMLFactory()) : new ObjectMapper();
         mapper.writerWithDefaultPrettyPrinter().writeValue(new File("snippets" + outputFileExt), allSnippets);
     }

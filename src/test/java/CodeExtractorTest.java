@@ -22,8 +22,7 @@ class CodeExtractorTest {
         String code = "package test;\n" +
                 "import com.example.annotations.*;\n" +
                 "public class TestClass {\n" +
-                "    @AiSnippetQuestion(\"Test question?\")\n" +
-                "    @AiSnippetAnswer(\"Test answer\")\n" +
+                "    @AiSnippet(question=\"Test question?\", answer=\"Test answer\")\n" +
                 "    public void testMethod() { System.out.println(\"Hello\"); }\n" +
                 "}";
         Path tempFile = Files.createTempFile("Test", ".java");

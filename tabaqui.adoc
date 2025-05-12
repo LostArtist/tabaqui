@@ -1,0 +1,30 @@
+= 🧠 Tabaqui
+
+**Tabaqui** is a code snippet extractor designed for collecting annotated method-level and field-level code samples from a Java project and exporting them in a structured format (JSON or YAML) for AI training purposes.
+
+'''
+
+== 📦 Overview
+
+This tool scans Java source files for custom annotations and extracts:
+
+- The **question**
+- The **answer**
+- The **method/field code**
+
+and serializes them into a machine-readable format like:
+
+[source,json]
+----
+[
+  {
+    "instruction": "What does this method do?",
+    "input": "",
+    "output": "It pauses Kafka fetcher: protected void doSuspend() { ... }"
+  }
+]
+----
+
+== User guide
+
+To use this project, you need to inject the maven dependency for custom annotating into the project you want to extract code snippets from. This https://github.com/LostArtist/ai-annotations-api[Annotation API] will allow you to annotate the code
