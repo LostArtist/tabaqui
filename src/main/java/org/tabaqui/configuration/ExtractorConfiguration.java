@@ -1,4 +1,4 @@
-package configuration;
+package org.tabaqui.configuration;
 
 import java.util.Arrays;
 import java.util.List;

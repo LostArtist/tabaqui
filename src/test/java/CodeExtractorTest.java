@@ -1,5 +1,5 @@
-import extractor.CodeExtractor;
-import model.CodeSnippet;
+import org.tabaqui.extractor.CodeExtractor;
+import org.tabaqui.model.CodeSnippet;
 import com.github.javaparser.StaticJavaParser;
 import com.github.javaparser.ParserConfiguration;
 import org.junit.jupiter.api.BeforeAll;

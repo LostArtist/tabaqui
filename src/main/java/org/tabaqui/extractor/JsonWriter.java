@@ -1,4 +1,4 @@
-package extractor;
+package org.tabaqui.extractor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import model.CodeSnippet;
+import org.tabaqui.model.CodeSnippet;
 
 public class JsonWriter {
     private static final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);

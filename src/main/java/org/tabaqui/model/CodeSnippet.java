@@ -1,4 +1,4 @@
-package model;
+package org.tabaqui.model;
 
 /**
  * Code snippet class construction

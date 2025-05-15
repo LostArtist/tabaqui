@@ -1,4 +1,4 @@
-package extractor;
+package org.tabaqui.extractor;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import model.CodeSnippet;
+import org.tabaqui.model.CodeSnippet;
 
 public class SnippetService {
     public static void extractSnippets(Path rootPath, String format) throws IOException {

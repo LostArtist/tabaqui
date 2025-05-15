@@ -1,4 +1,4 @@
-package extractor;
+package org.tabaqui.extractor;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,7 +15,7 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.AnnotationExpr;
 import com.github.javaparser.ast.expr.MemberValuePair;
 import com.github.javaparser.ast.expr.NormalAnnotationExpr;
-import model.CodeSnippet;
+import org.tabaqui.model.CodeSnippet;
 
 public class CodeExtractor {
 

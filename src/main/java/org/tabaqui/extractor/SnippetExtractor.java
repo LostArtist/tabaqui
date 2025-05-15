@@ -1,4 +1,4 @@
-package extractor;
+package org.tabaqui.extractor;
 
 import java.nio.file.Path;
 import java.util.concurrent.Callable;

@@ -81,7 +81,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>extractor.SnippetExtractor</mainClass>
+                            <mainClass>org.tabaqui.extractor.SnippetExtractor</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
