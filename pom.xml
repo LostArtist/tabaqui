@@ -16,8 +16,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.aiannotation</groupId>
-            <artifactId>snippetapi</artifactId>
+            <groupId>org.tabaqui</groupId>
+            <artifactId>annotation-api</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
