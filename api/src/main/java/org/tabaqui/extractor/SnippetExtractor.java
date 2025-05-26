@@ -24,7 +24,6 @@ public class SnippetExtractor implements Callable<Integer> {
     public Integer call() {
         try {
             SnippetService.extractSnippets(projectPath.toAbsolutePath(), format.toLowerCase());
-            System.out.println("✅ Snippets extracted to " + format.toUpperCase());
         } catch (Exception e) {
             System.err.println("❌ Error: " + e.getMessage());
             return 1;

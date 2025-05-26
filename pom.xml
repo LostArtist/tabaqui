@@ -7,6 +7,10 @@
     <groupId>org.tabaqui</groupId>
     <artifactId>annotation-extractor</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>api</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -18,7 +22,7 @@
         <dependency>
             <groupId>org.tabaqui</groupId>
             <artifactId>annotation-api</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.3</version>
         </dependency>
         <dependency>
             <groupId>com.github.peterbecker</groupId>

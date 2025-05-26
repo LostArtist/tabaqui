@@ -10,7 +10,7 @@ This tool scans Java source files for custom annotations and extracts:
 
 - The **question**
 - The **answer**
-- The **method/field code**
+- The **class/method/field code**
 
 and serializes them into a machine-readable format like:
 
@@ -27,14 +27,48 @@ and serializes them into a machine-readable format like:
 
 == User guide
 
-To use this project, you need to inject the maven dependency for custom annotating into the project you want to extract code snippets from. This https://github.com/LostArtist/ai-annotations-api[Annotation API] will allow you to annotate the code.
+To use this project, you need to add the Annotation API repository and inject dependency into the pom file of the project you want to extract code snippets from. This https://github.com/LostArtist/ai-annotations-api[Annotation API] will allow you to annotate the code:
 
-After you annotate all the necessary code in the project, you want to extract snippets from run the .jar file in the directory of this project:
+[source, xml]
+----
+<repositories>
+  <repository>
+    <id>github</id>
+    <url>https://maven.pkg.github.com/LostArtist/annotation-api</url>
+  </repository>
+</repositories>
+
+<dependency>
+  <groupId>org.tabaqui</groupId>
+  <artifactId>annotation-api</artifactId>
+  <version>1.0.3</version>
+</dependency>
+----
+
+
+
+There are two types of annotations:
+
+[source,java]
+----
+@AiSnippet(question = "your_question", answer = "your_answer")
+----
+
+This one will extract the question and the answer with the annotated class/method/field code.
+
+[source,java]
+----
+@AiAutoSnippet(question = "your_question")
+----
+
+This one will generate a templated answer for you, like "The method {method} from the class {class} is responsible for this operation".
+
+After you annotate all the necessary code in the project, you will be able to extract snippets running the .jar file in the api module of this project:
 
 === Example:
 [source, ]
 ----
-java -jar target/tabaqui-jar-with-dependencies.jar --project ~/code/java/camel/components/camel-kafka --format json
+java -jar api/target/tabaqui-jar-with-dependencies.jar --project ~/code/java/camel/components/camel-kafka --format json
 ----
 
 === Parameters:
@@ -42,4 +76,4 @@ java -jar target/tabaqui-jar-with-dependencies.jar --project ~/code/java/camel/c
 **-p, --project** - path to the project +
 **-f, --format** - output file format (json, yaml)
 
-The output file will be placed in the annotated project directory.
+The output file will be placed in the tabaqui directory.
