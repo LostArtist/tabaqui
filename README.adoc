@@ -41,7 +41,7 @@ To use this project, you need to add the Annotation API repository and inject de
 <dependency>
   <groupId>org.tabaqui</groupId>
   <artifactId>annotation-api</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.5</version>
 </dependency>
 ----
 
@@ -77,3 +77,17 @@ java -jar api/target/tabaqui-jar-with-dependencies.jar --project ~/code/java/cam
 **-f, --format** - output file format (json, yaml)
 
 The output file will be placed in the tabaqui directory.
+
+=== Snippet conversion:
+
+After snippet extraction, you will have the snippets.json or snippets.yaml file. These should be converted into the form of taxonomy, recognizable by InstructLab. For this purpose, use the convert_json_to_qna.py or convert_yaml_to_qna.py script:
+
+[source, ]
+----
+./convert_json_to_qna.py snippets.json qna.yaml
+
+./convert_yaml_to_qna.py snippets.yaml qna.yaml
+----
+
+This will create a qna.yaml file that you can add as a compositional skill into your model for generating synthetic data.
+
