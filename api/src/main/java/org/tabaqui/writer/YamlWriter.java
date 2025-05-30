@@ -9,6 +9,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.tabaqui.model.CodeSnippet;
 
+/**
+ * File writer class for yaml files
+ */
 public class YamlWriter {
 
     private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
